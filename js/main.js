@@ -277,6 +277,8 @@ if(form){  //  safety check
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
+	  document.getElementById("emailSubject").value = "Portfolio Contact: " + document.querySelector('input[name="subject"]').value;
+
     const formData = new FormData(form);
 
     try {
