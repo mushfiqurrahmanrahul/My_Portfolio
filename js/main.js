@@ -270,14 +270,22 @@
   });
 
 //  FORM SUBMIT WITHOUT REDIRECT (Formspree AJAX)
+//  FORM SUBMIT WITHOUT REDIRECT (Formspree AJAX)
 const form = document.getElementById("contactForm");
 const popup = document.getElementById("thankYouPopup");
 
-if(form){  //  safety check
+if(form && popup){
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-	  document.getElementById("emailSubject").value = "Portfolio Contact: " + document.querySelector('input[name="user_subject"]').value;
+    //  Safe subject input check
+    const subjectInput = document.querySelector('input[name="user_subject"]');
+    const emailSubject = document.getElementById("emailSubject");
+
+    if(subjectInput && emailSubject){
+      emailSubject.value = "Portfolio Contact: " + subjectInput.value;
+    }
 
     const formData = new FormData(form);
 
@@ -285,38 +293,34 @@ if(form){  //  safety check
       const response = await fetch(form.action, {
         method: form.method,
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       });
 
       if (response.ok) {
-        //  Show Popup
         popup.style.display = "flex";
-        //  Reset form
         form.reset();
       } else {
         alert("❌ Something went wrong! Please try again.");
       }
+
     } catch (error) {
       alert("❌ Error submitting form. Check your internet connection.");
     }
   });
-}
 
-//  Close Popup Function
-function closePopup() {
-  popup.style.display = "none";
-}
-
-//  Click outside popup to close
-window.addEventListener("click", function(e){
-  if(e.target === popup){
+  //  Make closePopup global (so HTML onclick can use it)
+  window.closePopup = function () {
     popup.style.display = "none";
-  }
-});
+  };
 
+  //  Click outside popup to close
+  window.addEventListener("click", function(e){
+    if(e.target === popup){
+      popup.style.display = "none";
+    }
+  });
 
+}
 
 
 })(jQuery);
