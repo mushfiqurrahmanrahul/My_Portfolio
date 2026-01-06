@@ -479,7 +479,9 @@
           <div class="col-md-6 order-md-last d-flex">
         
 
-			   <form id="contactForm" action="https://formspree.io/f/xdakqnln" method="POST" class="bg-light p-4 p-md-5 contact-form">
+<form id="contactForm" action="https://formspree.io/f/xdakqnln" method="POST" class="bg-light p-4 p-md-5 contact-form">
+
+  <input type="hidden" name="_subject" id="emailSubject" value="New Portfolio Message">
 
   <div class="form-group">
     <input type="text" name="name" class="form-control" placeholder="Your Name" required>
@@ -500,6 +502,8 @@
   <div class="form-group">
     <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
   </div>
+
+</form>
 
 </form>
 
