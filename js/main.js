@@ -269,6 +269,50 @@
     fixedContentPos: false
   });
 
+//  FORM SUBMIT WITHOUT REDIRECT (Formspree AJAX)
+const form = document.getElementById("contactForm");
+const popup = document.getElementById("thankYouPopup");
+
+if(form){  //  safety check
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        //  Show Popup
+        popup.style.display = "flex";
+        //  Reset form
+        form.reset();
+      } else {
+        alert("❌ Something went wrong! Please try again.");
+      }
+    } catch (error) {
+      alert("❌ Error submitting form. Check your internet connection.");
+    }
+  });
+}
+
+//  Close Popup Function
+function closePopup() {
+  popup.style.display = "none";
+}
+
+//  Click outside popup to close
+window.addEventListener("click", function(e){
+  if(e.target === popup){
+    popup.style.display = "none";
+  }
+});
 
 
 
